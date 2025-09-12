@@ -2,6 +2,8 @@
 #include<fstream>
 #include <string>
 #include <cstdlib>
+#include <limits>
+
 using namespace std;
 
 // ------------------ Candidate Class ------------------
@@ -55,29 +57,32 @@ public:
         cout << "New Voter Signup Page:\n" << endl;
         cout << "Enter your name           : ";
         getline(cin, name);
+        getchar();
         cout << "Enter your father's name  : ";
         getline(cin, fname);
+        getchar();
         cout << "Enter your date of birth  : ";
         getline(cin, dbo);
         cout << "Enter your age            : ";
         cin >> age;
-        cin.ignore();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
         if (age < 18) {
-            cout << "\n❌ You are not eligible for a voter ID (must be 18+)." << endl;
+            cout << "\nYou are not eligible for a voter ID (must be 18+)." << endl;
             return;
         }
         cout << "Enter your voter ID       : ";
         getline(cin, voter_id);
         cout << "Enter your password       : ";
         getline(cin, pass);
-        cout << "\n✅ Voter Sign-up successful!" << endl;
+
+        cout << "\nVoter Sign-up successful!" << endl;
         cout << "--------------------------------------------------------------------------------\n\n";
 
         info_file();
     }
 
     void info_file() {
-        if (age < 18) return; // don’t save ineligible
         ofstream store("voters.txt", ios::app);
         store << "Name          : " << name << endl;
         store << "Father name   : " << fname << endl;
@@ -130,7 +135,6 @@ public:
         candidate c1;
         voter v1;
         int choice;
-        string input;
 
         while (true) {
             cout << "-------------------------WELCOME TO THE E-VOTING SYSTEM-----------------------" << endl;
@@ -142,14 +146,7 @@ public:
             cout << "5. Show Election Result." << endl;
             cout << "6. Exit." << endl;
             cout << "\nEnter your choice : ";
-
-            getline(cin, input);
-            try {
-                choice = stoi(input);
-            } catch (...) {
-                cout << "Invalid input. Please enter a number." << endl;
-                continue;
-            }
+            cin>>choice;
 
             system("CLS"); // use "clear" on Linux/Mac
 
@@ -163,7 +160,6 @@ public:
                 break;
             case 3:
                 v1.sign_up();
-                v1.info_file();
                 break;
             case 4:
                 display_voters();
