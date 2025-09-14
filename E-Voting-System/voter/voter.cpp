@@ -1,3 +1,4 @@
+//voter's section
 #include<iostream>
 #include<fstream>
 #include<string>
@@ -171,5 +172,6 @@ int main()
    while(choice!=3);
    return 0;
 }
+
 
 
